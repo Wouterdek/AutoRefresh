@@ -2,26 +2,26 @@ import threading
 import time
 import sublime, sublime_plugin
 
-refreshThread = None
+refreshThreads = {}
 
 class EnableAutoRefreshCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
 		settings = sublime.load_settings('AutoRefresh.sublime-settings')
 		refreshRate = settings.get('auto_refresh_rate')
-		if refreshRate == None or (type(refreshRate) is not int and type(refreshRate) is not float):
+		if refreshRate == None or not isinstance(refreshRate, (int, float)):
 			print("Invalid auto_refresh_rate setting, using default 3")
 			refreshRate = 3
 
-		global refreshThread
-		if refreshThread == None or not refreshThread.enabled:
-			refreshThread = RefreshThread(self, edit, refreshRate)
-			refreshThread.start()
+		global refreshThreads
+		if refreshThreads.get(self.view.id()) == None or not refreshThreads.get(self.view.id()).enabled:
+			refreshThreads[self.view.id()] = RefreshThread(self, edit, refreshRate)
+			refreshThreads[self.view.id()].start()
 
 class DisableAutoRefreshCommand(sublime_plugin.TextCommand):
 	def run(self, edit):
-		global refreshThread
-		if refreshThread != None:
-			refreshThread.enabled = False
+		global refreshThreads
+		if refreshThreads.get(self.view.id()) != None:
+			refreshThreads[self.view.id()].enabled = False
 
 class RefreshThread(threading.Thread):
 	def __init__(self, cmd, edit, refreshRate):
