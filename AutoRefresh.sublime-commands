@@ -1,0 +1,10 @@
+[
+	{
+		"caption": "Enable Autorefresh",
+		"command": "enable_auto_refresh"
+	},
+	{
+		"caption": "Disable Autorefresh",
+		"command": "disable_auto_refresh"
+	}
+]
