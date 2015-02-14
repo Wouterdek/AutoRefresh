@@ -28,13 +28,33 @@ class RefreshThread(threading.Thread):
 		self.cmd = cmd
 		self.edit = edit
 		self.enabled = True
-		self.refreshRate = refreshRate;
+		self.refreshRate = refreshRate
 		threading.Thread.__init__(self)
 
 	def run(self):
 		while self.enabled:
 			time.sleep(self.refreshRate)
-			sublime.set_timeout(self.callback, 1)
+			sublime.set_timeout(self.reloadFile, 1) #Reload file
+			sublime.set_timeout(self.setView, 10)	#Wait for file reload to be finished
 
-	def callback(self):
+	def reloadFile(self):
+		row = self.cmd.view.rowcol(self.cmd.view.sel()[0].begin())[0] + 1
+		rowCount = (self.cmd.view.rowcol(self.cmd.view.size())[0] + 1)
+
+		if rowCount - row <= 3:
+			self.moveToEOF = True
+		else:
+			self.moveToEOF = False
+			#Sublime seems to have a bug where continuously reloading a file causes the viewport to scroll around
+			#Any fixes to this problem seem to have no effect since viewport_position() returns an incorrect value causing the scrolling
+			#What would probably work is to force focus on the cursor
+
 		self.cmd.view.run_command('revert')
+
+	def setView(self):
+		if not self.cmd.view.is_loading():
+			#Loading finished
+			if self.moveToEOF:
+				self.cmd.view.run_command("move_to", {"to": "eof", "extend": "false"})
+		else:
+			sublime.set_timeout(self.setView, 10)
