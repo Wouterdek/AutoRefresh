@@ -1,3 +1,4 @@
 {
-   "auto_refresh_rate": 3
+   "auto_refresh_rate": 3,
+   "files_with_auto_refresh_enabled_on_load": []
 }

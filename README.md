@@ -8,3 +8,5 @@ AutoRefresh can be used here to automatically reload the file, without having to
 
 Usage:
 From the commmand palette, use Enable AutoRefresh to enable. Similarly, use Disable AutoRefresh to stop the plugin.
+Use "Autorefresh: Remember the current setting for this file" to automatically enable AutoRefresh when a file is opened.
+To change the interval at which the file is refreshed: create a settings file called AutoRefresh.sublime-settings and set the setting auto_refresh_rate to how many seconds long you want the interval to be.
