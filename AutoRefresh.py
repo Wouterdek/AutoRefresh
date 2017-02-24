@@ -23,6 +23,12 @@ class DisableAutoRefreshCommand(sublime_plugin.TextCommand):
 		if refreshThreads.get(self.view.id()) != None:
 			refreshThreads[self.view.id()].enabled = False
 
+class SublimeEventHandler(sublime_plugin.EventListener):
+	def on_pre_close(self, view):
+		global refreshThreads
+		if refreshThreads.get(view.id()) != None:
+			refreshThreads[view.id()].enabled = False
+
 class RefreshThread(threading.Thread):
 	def __init__(self, cmd, edit, refreshRate):
 		self.cmd = cmd
@@ -33,9 +39,9 @@ class RefreshThread(threading.Thread):
 
 	def run(self):
 		while self.enabled:
-			time.sleep(self.refreshRate)
 			sublime.set_timeout(self.reloadFile, 1) #Reload file
 			sublime.set_timeout(self.setView, 10)	#Wait for file reload to be finished
+			time.sleep(self.refreshRate)
 
 	def reloadFile(self):
 		row = self.cmd.view.rowcol(self.cmd.view.sel()[0].begin())[0] + 1
