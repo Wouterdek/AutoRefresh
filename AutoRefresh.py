@@ -87,8 +87,11 @@ class RefreshThread(threading.Thread):
 
 	def run(self):
 		while self.enabled:
-			sublime.set_timeout(self.reloadFile, 1) #Reload file
-			sublime.set_timeout(self.setView, 10)	#Wait for file reload to be finished
+			if not self.view.is_dirty(): #Don't reload if user made changes
+				sublime.set_timeout(self.reloadFile, 1) #Reload file
+				sublime.set_timeout(self.setView, 10)	#Wait for file reload to be finished
+			#else:
+				#self.enabled = False
 			time.sleep(self.refreshRate)
 
 	def reloadFile(self):
