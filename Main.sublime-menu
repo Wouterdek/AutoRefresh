@@ -21,12 +21,12 @@
                             },
                             {
                                 "command": "open_file",
-                                "args": {"file": "${packages}/User/AutoRefresh.sublime-settings"},
+                                "args": {"file": "${packages}/User/Auto Refresh.sublime-settings"},
                                 "caption": "Settings – User"
                             },
                             {
                                 "command": "edit_settings",
-                                "args": {"base_file": "${packages}/AutoRefresh/AutoRefresh.sublime-settings", "default": ""},
+                                "args": {"base_file": "${packages}/Auto Refresh/AutoRefresh.sublime-settings", "default": ""},
                                 "caption": "Settings - Default & User"
                             },
                         ]
