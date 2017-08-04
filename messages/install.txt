@@ -1,0 +1,7 @@
+How to use AutoRefresh:
+-> Open the file you want to refresh automatically.
+-> From the commmand palette, use "Enable AutoRefresh" to enable.
+-> Use "Disable AutoRefresh" to stop the refreshing.
+
+Use "Autorefresh: Remember the current setting for this file" in the command palette to automatically enable AutoRefresh when a specific file is opened.
+Settings, such as refresh rate, are available under "Preferences->AutoRefresh"
