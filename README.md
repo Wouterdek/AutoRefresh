@@ -1,5 +1,5 @@
 # AutoRefresh
-This plugin allows users to get Sublime text to reload files in the editor every x seconds (default 3 seconds)
+Auto Refresh allows users to get Sublime text to reload files in the editor every x seconds (default 3 seconds)
 This is useful for monitoring logs which get continuously edited, even while the editor is not in focus.
 
 For example: You are running a fullscreen application and want to view the applications log on a different monitor.
